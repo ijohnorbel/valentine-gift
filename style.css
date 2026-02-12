@@ -1,0 +1,91 @@
+:root {
+    --bg-start: #050f0f;
+    --bg-end: #1a0a1f; /* Deep Purple */
+    --tulip-pink: #ff4d88;
+    --tulip-glow: rgba(255, 77, 136, 0.8);
+    --stem-green: #1a3a18;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: var(--bg-start);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 4s ease;
+}
+
+.plant {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-origin: bottom;
+    animation: sway 5s ease-in-out infinite;
+}
+
+/* Tulip & Leaves */
+.tulip {
+    width: 85px; height: 105px;
+    background: var(--tulip-pink);
+    border-radius: 50% 50% 15% 15%;
+    position: relative;
+    box-shadow: 0 0 50px var(--tulip-glow);
+    z-index: 5;
+    margin-bottom: -5px;
+}
+
+.tulip::before { content: ''; position: absolute; left: -20px; width: 100%; height: 100%; background: inherit; border-radius: 50% 100% 15% 50%; transform: rotate(-12deg); }
+.tulip::after { content: ''; position: absolute; right: -20px; width: 100%; height: 100%; background: inherit; border-radius: 100% 50% 50% 15%; transform: rotate(12deg); }
+
+.stem {
+    width: 14px; height: 0;
+    background: linear-gradient(to bottom, var(--stem-green), #0a1a09);
+    border-radius: 10px 10px 0 0;
+    transition: height 3s ease;
+    position: relative;
+}
+
+.leaf {
+    position: absolute;
+    width: 40px; height: 60px;
+    background: var(--stem-green);
+    border-radius: 0 100% 0 100%;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+.leaf.left { left: -35px; top: 40%; transform: rotate(-45deg); }
+.leaf.right { right: -35px; top: 20%; transform: rotate(45deg); border-radius: 100% 0 100% 0; }
+
+/* Butterfly (Stay at top) */
+.butterfly {
+    position: absolute;
+    width: 10px; height: 10px;
+    z-index: 15;
+    transform-style: preserve-3d;
+}
+.wing { position: absolute; width: 18px; height: 22px; border-radius: 50% 50% 0 50%; }
+.wing.left { left: -18px; transform-origin: right; animation: flap-left 0.2s infinite; }
+.wing.right { left: 0; transform-origin: left; border-radius: 50% 50% 50% 0; animation: flap-right 0.2s infinite; }
+
+@keyframes flap-left { 50% { transform: rotateY(75deg); } }
+@keyframes flap-right { 50% { transform: rotateY(-75deg); } }
+@keyframes sway { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+
+/* Fireflies & Grass */
+.firefly {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: #ffffaa;
+    border-radius: 50%;
+    box-shadow: 0 0 15px white, 0 0 25px yellow;
+    animation: drift var(--d) linear infinite, flash 2s ease-in-out infinite;
+}
+
+.title { position: absolute; top: 10%; color: #ffc0cb; text-shadow: 0 0 20px var(--tulip-glow); font-family: 'Georgia', serif; font-size: 2.5rem; }
+.grass-container { position: absolute; bottom: 0; width: 100%; height: 70px; display: flex; align-items: flex-end; }
+.blade { flex: 1; background: #1a3317; border-radius: 100% 100% 0 0; animation: wave 3s ease-in-out infinite; transform-origin: bottom; }
+@keyframes wave { 50% { transform: skewX(10deg); } }
